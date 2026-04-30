@@ -1,0 +1,249 @@
+<!DOCTYPE html>    
+<html lang="ro">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+
+<title>Cristi & Carmen</title>
+
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- MATERIAL ICONS -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="my-onlylight-element">
+
+<!-- SPLASH -->
+<div id="intro-splash">
+  <video id="splash-video">
+    <source src="Film.mp4" type="video/mp4">
+  </video>
+
+  <!-- 🔥 TEXT ADAUGAT -->
+  <div class="splash-text">
+    Apasă pe ecran
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+
+<video autoplay muted loop playsinline>
+<source src="intro-video.webm" type="video/webm">
+</video>
+
+<div class="hero-text">
+<div class="names">Cristi & Carmen</div>
+
+<div class="divider">
+<span><i class="fas fa-heart"></i></span>
+</div>
+
+<div class="date">26.09.2026</div>
+</div>
+
+</div>
+
+<!-- FAMILY -->
+<section class="family">
+
+<div class="family-title">Alături de părinții:</div>
+
+<div class="parents">
+<div>
+<p>Adrian & Mihaela</p>
+<p>Gorgan</p>
+</div>
+
+<div>
+<p>Adrian & Florentina</p>
+<p>Goga</p>
+</div>
+</div>
+
+<div class="family-title">Și de nașii:</div>
+
+<div class="nasi">
+<p>Dragoș & Ramona</p>
+<p>Țuinea</p>
+</div>
+
+</section>
+
+<!-- COUNTDOWN -->
+<section class="countdown-section">
+
+<h1>Numărătoare inversă</h1>
+
+<p class="subtitle">
+Până la cea mai specială zi din viața noastră
+</p>
+
+<div class="countdown">
+
+<div class="box">
+<span class="number" id="days">0</span>
+zile
+</div>
+
+<div class="box">
+<span class="number" id="hours">0</span>
+ore
+</div>
+
+<div class="box">
+<span class="number" id="minutes">0</span>
+minute
+</div>
+
+<div class="box">
+<span class="number" id="seconds">0</span>
+secunde
+</div>
+
+</div>
+
+</section>
+
+<!-- LOCATIONS -->
+<section class="locations">
+
+<h3 class="section-subtitle">Despre eveniment</h3>
+
+<h2 class="locations-title">
+  <span class="icon-circle">
+    <i class="material-icons">location_on</i>
+  </span>
+  <span class="title-script">Unde & Când</span>
+</h2>
+
+<div class="cards">
+
+<div class="card">
+<h3>⛪ Biserica „Nașterea Maicii Domnului”</h3>
+<p>Ora: 17:30</p>
+<p>Strada Târgu Neamț 6, București</p>
+
+<div class="map">
+<iframe src="https://maps.google.com/maps?q=Biserica%20Nasterea%20Maicii%20Domnului%20Drumul%20Taberei%20Bucuresti&z=16&output=embed"></iframe>
+</div>
+</div>
+
+<div class="divider">
+<span><i class="fas fa-heart"></i></span>
+</div>
+
+<div class="card">
+<h3>🍽 Restaurant Le Blanc</h3>
+<p>Ora: 19:30</p>
+<p>Strada Valea Oltului 199-201, București</p>
+
+<div class="map">
+<iframe src="https://www.google.com/maps?q=Restaurant+Le+Blanc+Bucuresti&output=embed"></iframe>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- RSVP -->
+<section class="rsvp">
+
+<div class="icon-circle rsvp-icon">
+  <i class="fas fa-glass-cheers"></i>
+</div>
+
+<p class="rsvp-text">
+Dragi noștri,
+Ne-am bucura nespus să fim împreună în cea mai specială zi! Vă rugăm să confirmați prezența voastră până la data de 26.08.2026
+</p>
+
+<div class="rsvp-contacts">
+<div>
+<p><strong>Cristi:</strong></p>
+<p>+40 771 183 417</p>
+</div>
+
+<div>
+<p><strong>Carmen:</strong></p>
+<p>+40 727 083 686</p>
+</div>
+</div>
+
+</section>
+
+<!-- FINAL -->
+<div class="final">
+<div class="names">Cristi & Carmen</div>
+
+<div class="divider">
+<span><i class="fas fa-heart"></i></span>
+</div>
+
+<div class="date">26.09.2026</div>
+</div>
+
+</div>
+
+<script>
+const splash = document.getElementById("intro-splash")
+const video = document.getElementById("splash-video")
+const splashText = document.querySelector(".splash-text")
+
+// 🔥 TIMP EDITABIL (ms)
+const SPLASH_TIME = 4500; // 4 secunde
+
+// click pe splash
+splash.addEventListener("click", () => {
+video.play()
+
+// 🔥 ascunde textul imediat
+if (splashText) {
+splashText.style.opacity = "0"
+splashText.style.transition = "0.3s ease"
+}
+})
+
+// 🔥 ascunde TOT splash-ul după timp
+setTimeout(() => {
+splash.style.opacity = "0"
+splash.style.transition = "0.8s ease"
+
+setTimeout(() => {
+splash.style.display = "none"
+}, 4500)
+
+}, SPLASH_TIME)
+
+let date = new Date("2026-09-26T17:30:00").getTime()
+
+setInterval(() => {
+let now = new Date().getTime()
+let d = date - now
+
+let zile = Math.floor(d / (1000 * 60 * 60 * 24))
+let ore = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+let min = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60))
+let sec = Math.floor((d % (1000 * 60)) / 1000)
+
+days.textContent = zile
+hours.textContent = ore
+minutes.textContent = min
+seconds.textContent = sec
+
+}, 1000)
+</script>
+
+</body>
+</html>
