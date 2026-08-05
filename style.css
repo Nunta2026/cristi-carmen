@@ -25,6 +25,7 @@ body {
   justify-content: center;
   z-index: 999;
   transition: opacity 0.8s ease;
+  cursor: pointer;
 }
 
 #intro-splash video {
@@ -75,12 +76,26 @@ body {
 
 /* SEPARATOR */
 .divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto;
+  gap: 10px;
   width: 120px;
-  height: 2px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
   background: white;
-  margin: 15px auto;
-  opacity: 0.8;
-  border-radius: 2px;
+  opacity: 0.7;
+}
+
+.divider span {
+  color: red;
+  font-size: 18px;
 }
 
 /* TITLU MIC */
@@ -226,49 +241,6 @@ section {
   border: 0;
 }
 
-/* MOBILE */
-@media(max-width: 600px) {
-  .names {
-    font-size: 50px;
-  }
-
-  .title-script {
-    font-size: 28px;
-  }
-
-  .divider {
-    width: 80px;
-  }
-
-  section {
-    margin: 25px 15px;
-    padding: 40px 20px;
-  }
-}
-
-/* DIVIDER */
-.divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 20px auto;
-  gap: 10px;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: white;
-  opacity: 0.7;
-}
-
-.divider span {
-  color: red;
-  font-size: 18px;
-}
-
 /* RSVP */
 .rsvp {
   background: #f1ebdf;
@@ -317,12 +289,12 @@ section {
   transform: translate(-50%,-50%);
   font-family: 'Great Vibes', cursive;
   font-size: 48px;
-  color: rgba(75, 46, 30, 0.6) !important;
+  color: rgba(255, 255, 255, 0.9);
   text-shadow: 0 0 10px rgba(0,0,0,0.7);
   z-index: 1000;
   pointer-events: none;
   opacity: 1;
-  transition: opacity 0.5s ease-out; /* Tranziție adăugată pentru fade */
+  transition: opacity 0.5s ease-out;
   animation: fadePulse 2s infinite;
 }
 
@@ -330,4 +302,24 @@ section {
   0% { opacity: 0.4; }
   50% { opacity: 1; }
   100% { opacity: 0.4; }
+}
+
+/* MOBILE */
+@media(max-width: 600px) {
+  .names {
+    font-size: 50px;
+  }
+
+  .title-script {
+    font-size: 28px;
+  }
+
+  .divider {
+    width: 80px;
+  }
+
+  section {
+    margin: 25px 15px;
+    padding: 40px 20px;
+  }
 }
