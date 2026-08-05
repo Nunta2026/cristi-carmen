@@ -20,7 +20,7 @@
 <div id="my-onlylight-element">
 
   <div id="intro-splash">
-    <video id="splash-video" playsinline>
+    <video id="splash-video" playsinline muted>
       <source src="Film.mp4" type="video/mp4">
     </video>
 
@@ -104,7 +104,7 @@
         <p>Strada Târgu Neamț 6, București</p>
 
         <div class="map">
-          <iframe src="https://maps.google.com/maps?q=Biserica%20Nasterea%20Maicii%20Domnului%20Drumul%20Taberei%20Bucuresti&z=16&output=embed"></iframe>
+          <iframe src="https://maps.google.com/maps?q=Biserica%20Nasterea%20Maicii%20Domnului%20Drumul%20Taberei%20Bucuresti&z=16&output=embed" loading="lazy"></iframe>
         </div>
       </div>
 
@@ -118,7 +118,7 @@
         <p>Strada Valea Oltului 199-201, București</p>
 
         <div class="map">
-          <iframe src="https://www.google.com/maps?q=Restaurant+Le+Blanc+Bucuresti&output=embed"></iframe>
+          <iframe src="https://www.google.com/maps?q=Restaurant+Le+Blanc+Bucuresti&output=embed" loading="lazy"></iframe>
         </div>
       </div>
     </div>
@@ -162,12 +162,23 @@ const video = document.getElementById("splash-video");
 const splashText = document.querySelector(".splash-text");
 
 let started = false;
+let splashHidden = false;
 
 /* --- CONTROL PE TIMP ---
    Setează `0` pentru a folosi durata exactă a videoclipului din fișier.
    Sau scrie un număr de secunde (ex: 8) pentru a forța terminarea manuală a splash-ului.
 */
-const customDuration = 0; 
+const customDuration = 0;
+
+function hideSplash() {
+  if (splashHidden) return;
+  splashHidden = true;
+
+  splash.style.opacity = "0";
+  setTimeout(() => {
+    splash.style.display = "none";
+  }, 800);
+}
 
 splash.addEventListener("click", () => {
   if (started) return;
@@ -175,23 +186,23 @@ splash.addEventListener("click", () => {
 
   // Face textul transparent cu tranziție lină
   splashText.style.opacity = "0";
-  
+
   // Așteaptă terminarea tranziției CSS înainte de a-l ascunde din DOM
   setTimeout(() => {
     splashText.style.display = "none";
   }, 500);
 
-  // Pornește video
-  video.play();
+  // Pornește video, cu fallback dacă play() eșuează
+  // (codec nesuportat, browser care blochează redarea, fișier lipsă etc.)
+  const playPromise = video.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      hideSplash();
+    });
+  }
 
-  // Funcție de tranziție pentru splash
-  const hideSplash = () => {
-    splash.style.opacity = "0";
-
-    setTimeout(() => {
-      splash.style.display = "none";
-    }, 800);
-  };
+  // Dacă video-ul are eroare la încărcare (fișier lipsă, format neacceptat)
+  video.addEventListener("error", hideSplash);
 
   // Verifică cum se controlează durata
   if (customDuration === 0) {
@@ -199,6 +210,10 @@ splash.addEventListener("click", () => {
   } else {
     setTimeout(hideSplash, customDuration * 1000);
   }
+
+  // Plasă de siguranță: indiferent ce se întâmplă, nu lăsa splash-ul
+  // blocat mai mult de 8 secunde
+  setTimeout(hideSplash, 8000);
 });
 
 // COUNTDOWN
@@ -208,10 +223,12 @@ setInterval(() => {
   let now = new Date().getTime();
   let d = date - now;
 
-  days.textContent = Math.floor(d / (1000 * 60 * 60 * 24));
-  hours.textContent = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  minutes.textContent = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
-  seconds.textContent = Math.floor((d % (1000 * 60)) / 1000);
+  if (d < 0) d = 0;
+
+  document.getElementById("days").textContent = Math.floor(d / (1000 * 60 * 60 * 24));
+  document.getElementById("hours").textContent = Math.floor((d % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  document.getElementById("minutes").textContent = Math.floor((d % (1000 * 60 * 60)) / (1000 * 60));
+  document.getElementById("seconds").textContent = Math.floor((d % (1000 * 60)) / 1000);
 }, 1000);
 </script>
 
